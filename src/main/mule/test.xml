@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:ibm-mq="http://www.mulesoft.org/schema/mule/ibm-mq"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ibm-mq http://www.mulesoft.org/schema/mule/ibm-mq/current/mule-ibm-mq.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<ibm-mq:config name="IBM_MQ_Config" doc:name="IBM MQ Config" doc:id="e3573b1b-9575-451d-9244-fcaa29b92632" >
+		<ibm-mq:connection specification="JMS_1_1">
+			<ibm-mq:connection-mode >
+				<ibm-mq:client host="bbctgpplx02" port="2423" queueManager="CBMQEXTS701" channel="UPD.CRTPYT.SVRCONN" connectionNameList="bbctgpplx02(2423)"/>
+			</ibm-mq:connection-mode>
+		</ibm-mq:connection>
+	</ibm-mq:config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="22bf56a4-8449-494d-9956-25c3bcede357" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="testFlow1" doc:id="19bc5170-c692-4c10-8ba4-ea917e18e644" >
+		<http:listener doc:name="Listener" doc:id="45cb978d-8137-42a4-b2b9-1ebb2ea31a86" config-ref="HTTP_Listener_config" path="/test"/>
+		<choice doc:name="Choice" doc:id="118bfd85-6e98-4816-ba6f-02dc5811ee96" >
+			<when expression='#[attributes.headers.name=="tarunGay"]'>
+				<logger level="INFO" doc:name="Logger" doc:id="c1779800-2833-4ac1-a44c-819729281f85" message="tarun is a gay"/>
+			</when>
+			<when expression='#[attributes.headers.name=="vamshe"]' >
+				<logger level="INFO" doc:name="Logger" doc:id="42dd8976-f886-4002-a81b-f852db30ced3"/>
+			</when>
+			
+		</choice>
+		<ee:transform doc:name="Transform Message" doc:id="f3a47670-c431-4898-97ab-d768a7526c37" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+"Haleluya"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

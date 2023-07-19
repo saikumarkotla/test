@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<validation:config name="Validation_Config" doc:name="Validation Config" doc:id="8de78683-59cc-4ae1-90f3-462dceb36ee6" />
+	<flow name="main-flow" doc:id="08bb989c-4d14-42a2-b20f-7bf5e529eecc" >
+		<http:listener doc:name="Listener" doc:id="66320674-e55c-4e3d-8035-68ee072063cd" config-ref="HTTP_Listener_config" path="/error"/>
+		<try doc:name="Try" doc:id="61560ed0-926a-4df5-be49-8f73c4508388" >
+			<validation:is-null doc:name="Is null" doc:id="28c4edf4-fdd1-45d3-ab38-ee43c1f64c47" config-ref="Validation_Config" value="#[payload != null]" />
+			<error-handler >
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1a4c9d23-be69-4b37-93cf-d0e504bef5af" >
+					<logger level="INFO" doc:name="Logger" doc:id="d4552813-7f73-4930-a549-9a32a478b361" message="error-try-scope"/>
+				</on-error-propagate>
+			</error-handler>
+		</try>
+		<logger level="INFO" doc:name="Logger 1" doc:id="e1ed89d8-2b14-4359-b2a5-05bca1441c00" message="success-main-flow"/>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="5b2831a6-d03d-4b60-9178-20f7227bb0a3" >
+				<logger level="INFO" doc:name="Logger" doc:id="487de975-44a6-41f7-9ffa-691134b78193" message="error-main-flow"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

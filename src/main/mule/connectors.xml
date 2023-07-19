@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:spring="http://www.mulesoft.org/schema/mule/spring" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd">
+	<flow name="connectorsFlow" doc:id="00572cd4-5b38-4d51-9736-1ca6c1c2d275" >
+		<first-successful doc:name="First Successful" doc:id="033dfbd1-532c-45da-8f90-f82f9bf03748" >
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="461c9ae8-fac0-43ce-95dd-f1f543ac0b06" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</route>
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="2fa3b336-be79-4da8-8fa4-d7083298782e" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</route>
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="426631e2-57e0-45fa-9647-919e8f3466dd">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</route>
+		</first-successful>
+		<choice doc:name="Choice" doc:id="4be4c500-adcc-494e-879c-8fa50661aef8" >
+			<when expression='#[attributes.queryParams.name=="sai"]'>
+				<ee:transform doc:name="Transform Message" doc:id="8dd9268d-f227-4be2-a41e-6b352b891e68" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</when>
+		</choice>
+	</flow>
+</mule>
