@@ -22,7 +22,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		<logger level="INFO" doc:name="Logger 1" doc:id="e1ed89d8-2b14-4359-b2a5-05bca1441c00" message="success-main-flow"/>
 		<error-handler>
 			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="5b2831a6-d03d-4b60-9178-20f7227bb0a3" >
-				<logger level="INFO" doc:name="Logger" doc:id="487de975-44a6-41f7-9ffa-691134b78193" message="error-main-flow"/>
+				<logger level="INFO" doc:name="Logger" doc:id="487de975-44a6-41f7-9ffa-691134b78193" message="main-flow-error"/>
 			</on-error-continue>
 		</error-handler>
 	</flow>
